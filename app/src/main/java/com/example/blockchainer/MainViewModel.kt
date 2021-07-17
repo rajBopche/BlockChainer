@@ -1,17 +1,14 @@
 package com.example.blockchainer
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 
-class MainViewModel() : ViewModel() {
+class MainViewModel : ViewModel() {
 
     private val repo = MainRepo()
-
-
-    init {
-
-    }
-
-    //fun getTransactions(): LiveData = repo.
-
-
+    val transactionMediator: LiveData<TransactionModel> =
+        Transformations.map(repo.getTransactionLiveData()) {
+            it
+        }
 }
