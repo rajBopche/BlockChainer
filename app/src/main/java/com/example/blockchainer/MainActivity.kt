@@ -2,38 +2,34 @@ package com.example.blockchainer
 
 import android.os.Build
 import android.os.Bundle
-import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.example.blockchainer.databinding.ActivityMainBinding
 
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var model: MainViewModel
-    private lateinit var hashText: TextView
-    private lateinit var amount: TextView
-    private lateinit var time: TextView
+    private lateinit var viewModel: MainViewModel
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        model = ViewModelProvider(this).get(MainViewModel::class.java)
-        hashText = findViewById(R.id.tv_hash_value)
-        amount = findViewById(R.id.tv_amount)
-        time = findViewById(R.id.tv_time)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
     }
 
     override fun onStart() {
         super.onStart()
-        model.transactionMediator.observe(this, Observer(::onTransactionDataReceived))
+        viewModel.transactionMediator.observe(this, Observer(::onTransactionDataReceived))
     }
 
     @RequiresApi(Build.VERSION_CODES.N)
     private fun onTransactionDataReceived(transactionModel: TransactionModel) {
-        hashText.text = transactionModel.transactionHash
-        time.text = transactionModel.transactionTime.toString()
+        binding.tvHashValue.text = transactionModel.transactionHash
+        binding.tvTime.text = transactionModel.transactionTime.toString()
     }
 
 

@@ -19,8 +19,8 @@ class SocketListener(val listener: SocketObserver) : WebSocketListener() {
 
     override fun onMessage(webSocket: WebSocket, text: String) {
         super.onMessage(webSocket, text)
-         val data:TransactionModel = Gson().fromJson(text,TransactionModel::class.java)
-        listener.onSocketDataReceived(data)
+        val data: RootTransaction = Gson().fromJson(text, RootTransaction::class.java)
+        listener.onSocketDataReceived(data.rootTransaction)
         Log.d("RESPONSE", text) //todo add method to pass back the response to downStream
     }
 
