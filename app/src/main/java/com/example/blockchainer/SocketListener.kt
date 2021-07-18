@@ -14,19 +14,18 @@ class SocketListener(val listener: SocketObserver) : WebSocketListener() {
 
     override fun onOpen(webSocket: WebSocket, response: Response) {
         super.onOpen(webSocket, response)
-        webSocket.send("{\"op\": \"unconfirmed_sub\"}") //todo refactor with gson stuff
+        webSocket.send(SUB_UNCONFIRMED_TRANSACTIONS)
     }
 
     override fun onMessage(webSocket: WebSocket, text: String) {
         super.onMessage(webSocket, text)
         val data: RootTransaction = Gson().fromJson(text, RootTransaction::class.java)
         listener.onSocketDataReceived(data.rootTransaction)
-        Log.d("RESPONSE", text) //todo add method to pass back the response to downStream
     }
 
     override fun onClosing(webSocket: WebSocket, code: Int, reason: String) {
         super.onClosing(webSocket, code, reason)
-        webSocket.send("{\"op\": \"unconfirmed_unsub\"}") //todo refactor with json stuff
+        webSocket.send(UNSUB_UNCONFIRMED_TRANSACTIONS)
     }
 
     override fun onFailure(webSocket: WebSocket, t: Throwable, response: Response?) {
