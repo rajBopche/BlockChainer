@@ -2,7 +2,6 @@ package com.example.blockchainer
 
 import android.os.Build
 import android.os.Bundle
-import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -16,7 +15,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var viewModel: MainViewModel
     private lateinit var binding: ActivityMainBinding
     private lateinit var transactionAdapter: TransactionsAdapter
-    private val transactionList = ArrayList<TransactionModel>()
+    private val transactionList = ArrayList<UITransactions>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,15 +44,17 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
+        binding.tvConnectionStatus.text = "Connecting..."
         viewModel.transactionMediator.observe(this, Observer(::onTransactionDataReceived))
     }
 
     @RequiresApi(Build.VERSION_CODES.N)
-    private fun onTransactionDataReceived(transactionModel: TransactionModel) {
+    private fun onTransactionDataReceived(transactionModel: UITransactions?) {
+        if (transactionModel == null) return
         notifyTransactionUpdates(transactionModel)
     }
 
-    private fun notifyTransactionUpdates(transactionModel: TransactionModel) {
+    private fun notifyTransactionUpdates(transactionModel: UITransactions) {
         if (transactionList.size >= 5) {
             transactionList.removeAt(transactionList.size - 1)
             transactionList.add(0, transactionModel)
@@ -62,10 +63,6 @@ class MainActivity : AppCompatActivity() {
             transactionList.add(transactionModel)
             transactionAdapter.notifyItemChanged(transactionList.size - 1)
         }
-        hideLoadingProgress()
-    }
-
-    private fun hideLoadingProgress() {
-        binding.progressCircular.visibility = View.GONE
+        binding.tvConnectionStatus.text = "Connected"
     }
 }

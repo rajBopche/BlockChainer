@@ -24,24 +24,25 @@
                 android:id="@+id/tv_hash_value"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="hash value"
+                android:textColor="@color/black"
+                android:textSize="14sp"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/tv_amount"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="hash value"
+                android:textColor="@color/light_green"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_hash_value" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/tv_time"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="hash value"
-                app:layout_constraintTop_toBottomOf="@id/tv_amount" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_amount" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </com.google.android.material.card.MaterialCardView>

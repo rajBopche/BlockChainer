@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.blockchainer.databinding.LayoutTransactionRowItemBinding
 
-class TransactionsAdapter(private val transactionList: List<TransactionModel>) :
+class TransactionsAdapter(private val transactionList: List<UITransactions>) :
     RecyclerView.Adapter<TransactionsAdapter.TransactionViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TransactionViewHolder {
@@ -23,9 +23,10 @@ class TransactionsAdapter(private val transactionList: List<TransactionModel>) :
     class TransactionViewHolder(val binding: LayoutTransactionRowItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bindTransactionData(transactionModel: TransactionModel) {
+        fun bindTransactionData(transactionModel: UITransactions) {
             binding.tvHashValue.text = transactionModel.transactionHash
-            binding.tvTime.text = transactionModel.transactionTime.toString()
+            binding.tvTime.text = transactionModel.transactionTime
+            binding.tvAmount.text = transactionModel.transactionAmount
         }
     }
 }
